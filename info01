@@ -1,0 +1,498 @@
+Classes in Js
+  - class Surgeon{
+  constructor(name,department){
+    this.name=name;  // this is called property (this.name or whatever )
+    this.department=department;
+
+  }
+}
+
+// we use constructor to build an instance of the class 
+// focus on the syntax of class very well 
+
+--
+// instance -> is an object created from the class that has the properties under constructor
+// we called new to make that instance.
+
+example ;
+
+
+class Surgeon {
+  constructor(name, department) {
+    this.name = name;
+    this.department = department;
+  }
+}
+let surgeonRomero=new Surgeon('Francisco Romero','Cardiovascular');
+
+let surgeonJackson=new Surgeon('Ruth Jackson','Orthopedics');
+
+-- 
+How to make getter methods or method inside class ;
+ex;
+In the Surgeon constructor, prepend the name and department properties with an underscore (_) to indicate they should not be accessed directly.
+Checkpoint 2 Passed
+
+2.
+
+Inside the constructor, add a property named _remainingVacationDays and set it equal to 20.
+Checkpoint 3 Passed
+
+3.
+
+Under the constructor, create a getter called name that returns the value saved to _name.
+Checkpoint 4 Passed
+
+4.
+
+Under the .name() getter, create a getter called department that returns the value saved to _department.
+Checkpoint 5 Passed
+
+5.
+
+Under the .department() getter, create a getter called remainingVacationDays that returns the value saved to _remainingVacationDays.
+Checkpoint 6 Passed
+
+6.
+
+Under the .remainingVacationDays() getter, create a method called takeVacationDays that accepts one argument named daysOff.
+
+Inside the method, subtract daysOff from the number saved to _remainingVacationDays. Set _remainingVacationDays to the result.
+--- 
+solution;
+//notes
+// we added _ before name or department to indicate that they can't change directly 
+// note that -> getter has  keyword get
+// any method doesn't have any keyword behind it in class;
+// also ; you don't need to add data type for any parameter inside method you define as JS is dynamically types which means accept any type 
+class Surgeon {
+  constructor(name, department,//daysOff(you don't need this also inside constructor) {
+    this._name = name;
+    this._department = department;
+    this._remainingVacationDays=20 ;
+   //this._daysOff;  you can delete this from here 
+  }
+  get name(){
+    return this._name ;
+  }
+  get department(){
+    return this._department;
+  }
+  get remainingVacationDays(){
+    return this._remainingVacationDays;
+  }
+  takeVacationDays(){
+    this._remainingVacationDays-= daysOff;
+  }
+}
+
+const surgeonRomero = new Surgeon('Francisco Romero', 'Cardiovascular');
+const surgeonJackson = new Surgeon('Ruth Jackson', 'Orthopedics');
+---
+how to write an instance and get the return from gettter methods ; 
+.
+
+At the bottom of main.js, use console.log() and the .name getter to print the value saved to the _name property of the surgeonRomero object.
+Checkpoint 2 Passed
+
+2.
+
+Call .takeVacationDays() on surgeonRomero, with an input of 3.
+Checkpoint 3 Passed
+
+3.
+
+After the call to .takeVacationDays(), use console.log() and the .remainingVacationDays getter to print the value saved to the _remainingVacationDays property of the surgeonRomero instance.
+
+solution;
+class Surgeon {
+  constructor(name, department) {
+    this._name = name;
+    this._department = department;
+    this._remainingVacationDays = 20;
+  }
+  
+  get name() {
+    return this._name;
+  }
+  
+  get department() {
+    return this._department;
+  }
+  
+  get remainingVacationDays() {
+    return this._remainingVacationDays;
+  }
+  
+  takeVacationDays(daysOff) {
+    this._remainingVacationDays -= daysOff;
+  }
+}
+
+const surgeonRomero = new Surgeon('Francisco Romero', 'Cardiovascular');
+const surgeonJackson = new Surgeon('Ruth Jackson', 'Orthopedics');
+
+console.log(surgeonRomero.name); // check this
+console.log(surgeonRomero.remainingVacationDays)
+surgeonRomero.takeVacationDays(3); //check this
+console.log('After takeing the vacation days the rest of days for you is ;')
+console.log(surgeonRomero.remainingVacationDays)
+
+---
+Inheritance in Js
+  - we have superclass which bring it's properties to it's child class  
+ex; 
+1.
+
+In the next few exercises, you will create two subclasses (Doctor and Nurse) from a parent class named HospitalEmployee. Below, we have listed the properties and methods you will find in the Doctor and Nurse classes.
+Doctor
+
+    Properties: _name, _remainingVacationDays, _insurance
+    Methods: .takeVacationDays()
+
+Nurse
+
+    Properties: _name, _remainingVacationDays, _certifications
+    Methods: .takeVacationDays(), .addCertification()
+
+In main.js, create a parent class named HospitalEmployee based on the shared properties and methods. Add a constructor method with name as a parameter.
+Checkpoint 2 Passed
+
+2.
+
+Within the constructor, set the instance’s _name to name and _remainingVacationDays to 20.
+Checkpoint 3 Passed
+
+3.
+
+Under the constructor, create getters for your _name and _remainingVacationDays properties, called name and remainingVacationDays respectively.
+
+Within each getter, return the respective property’s value.
+Checkpoint 4 Passed
+
+4.
+
+Under the getters, add a method called takeVacationDays.
+
+This method should accept one argument, called daysOff.
+
+Inside the method, subtract daysOff from _remainingVacationDays. Save the result to _remainingVacationDays.
+solution;
+class HospitalEmployee{
+  constructor(name){
+    this._name=name;
+    this._remainingVacationDays=20;
+  }
+   get name(){
+      return this._name;
+    }
+    get remainingVacationDays(){
+      return this._remainingVacationDays;
+    }
+    takeVacationDays(daysOff){
+      return this._remainingVacationDays-=daysOff ;
+    }
+
+}
+
+class Doctor {
+  constructor(name,insurance){
+    this._name=name;
+    this._insurance=insurance;
+    this._remainingVacationDays=20;
+  }
+  takeVacationDays(daysOff){
+    return takeVacationDays-=daysOff;
+  }
+   get name(){
+      return this._name;
+    }
+    get remainingVacationDays(){
+      return this._remainingVacationDays;
+    }
+    takeVacationDays(daysOff){
+      return this._remainingVacationDays-=daysOff ;
+    }
+}
+class   Nurse{
+    constructor(name,addCertifications){
+      this._name=name;
+      this._addCertification=addCertifications;
+      this._remainingVacationDays=20;
+    }
+    get name(){
+      return this._name;
+    }
+    get remainingVacationDays(){
+      return this._remainingVacationDays;
+    }
+    takeVacationDays(daysOff){
+      return this._remainingVacationDays-=daysOff ;
+    }
+    addCertification(certification){
+      return certification++;
+    }
+
+} 
+---
+now you should know how you can extends parent class into the child class using two keywords; extends(extends the parent class into the child class),super(means take the properties from the parent that against that property)
+ex;
+1.
+
+In this exercise, you will begin to create the Nurse class as a child of the HospitalEmployee class. The Nurse class has the following properties and methods:
+Nurse
+
+    Properties: _name, _remainingVacationDays, _certifications
+    Methods: .takeVacationDays(), .addCertification()
+
+Under HospitalEmployee, create an empty class named Nurse that extends HospitalEmployee.
+Checkpoint 2 Passed
+
+2.
+
+Inside the Nurse class, create a constructor that accepts two parameters. Use the list of properties from the previous step to name these arguments. Order the parameters in the same way they are listed.
+
+Check the hint if you need help.
+Checkpoint 3 Passed
+
+3.
+
+In the Nurse constructor, call the parent’s constructor method and pass the appropriate value(s).
+Checkpoint 4 Passed
+
+4.
+
+Inside the Nurse constructor, under the call to super(), set _certifications based on the corresponding argument.
+Checkpoint 5 Passed
+
+5.
+
+Under the Nurse class, create a new instance of Nurse and save it to a constant variable named nurseOlynyk. Pass in the following values for each property:
+
+    name: 'Olynyk'
+    certifications: ['Trauma', 'Pediatrics']
+
+solution;
+class HospitalEmployee {
+  constructor(name) {
+    this._name = name;
+    this._remainingVacationDays = 20;
+  }
+  
+  get name() {
+    return this._name;
+  }
+  
+  get remainingVacationDays() {
+    return this._remainingVacationDays;
+  }
+  
+  takeVacationDays(daysOff) {
+    this._remainingVacationDays -= daysOff;
+  }
+}
+
+
+class  Nurse extends HospitalEmployee{
+  constructor(name,certifications){
+    super(name);
+    this._certifications=certifications;
+  }
+}
+
+const nurseOlynyk=new Nurse('Olynyk',['Trauma','Pediatrics'])
+---
+how to call the property inside any class (child class) after extends it with parent (super) class
+ex;
+Call .takeVacationDays() with an input of 5 on your nurseOlynyk instance.
+Checkpoint 2 Passed
+
+2.
+
+Under the method call, log the value saved to the _remainingVacationDays property in nurseOlynyk using the corresponding getter method.
+solution;
+class HospitalEmployee {
+  constructor(name) {
+    this._name = name;
+    this._remainingVacationDays = 20;
+  }
+  
+  get name() {
+    return this._name;
+  }
+  
+  get remainingVacationDays() {
+    return this._remainingVacationDays;
+  }
+  
+  takeVacationDays(daysOff) {
+    this._remainingVacationDays -= daysOff;
+  }
+}
+
+class Nurse extends HospitalEmployee {
+ constructor(name, certifications) {
+   super(name);
+   this._certifications = certifications;
+ } 
+}
+
+const nurseOlynyk = new Nurse('Olynyk', ['Trauma','Pediatrics']);
+nurseOlynyk.takeVacationDays(5);
+// check log it to the console
+console.log(nurseOlynyk._remainingVacationDays)
+
+output;
+15
+---
+this is also shows you how to access the properties of class
+ex;
+1.
+
+Use the properties and methods below to help you complete the tasks that follow.
+Nurse
+
+    Properties: _name, _remainingVacationDays, _certifications
+    Methods: .takeVacationDays(), .addCertification()
+
+Under the Nurse constructor, add a .certifications() getter that returns the value saved to the Nurse instance’s _certifications property.
+Checkpoint 2 Passed
+
+2.
+
+Add a method called addCertification under the .certifications() getter.
+
+This method should accept one input, newCertification. Inside the method, use the push() method to add the newCertification value to the nurse’s _certifications array.
+Checkpoint 3 Passed
+
+3.
+
+At the bottom of main.js, call .addCertification() on nurseOlynyk with an argument of 'Genetics'.
+Checkpoint 4 Passed
+
+4.
+
+Using the .certifications() getter, log the value saved to the _certifications property of nurseOlynyk to the console.
+solution;
+class HospitalEmployee {
+  constructor(name) {
+    this._name = name;
+    this._remainingVacationDays = 20;
+  }
+  
+  get name() {
+    return this._name;
+  }
+  
+  get remainingVacationDays() {
+    return this._remainingVacationDays;
+  }
+  
+  takeVacationDays(daysOff) {
+    this._remainingVacationDays -= daysOff;
+  }
+}
+
+class Nurse extends HospitalEmployee {
+  constructor(name, certifications) {
+    super(name);
+    this._certifications = certifications;
+  } 
+  get certifications(){
+    return this._certifications ;
+  }
+  addCertification(newCertification){
+    this._certifications.push(newCertification);
+  }
+}
+
+const nurseOlynyk = new Nurse('Olynyk', ['Trauma','Pediatrics']);
+nurseOlynyk.takeVacationDays(5);
+console.log(nurseOlynyk.remainingVacationDays);
+
+
+nurseOlynyk.addCertification('Genetics');
+// nurseOlynyk.certifications();
+console.log(nurseOlynyk._certifications);
+output;
+Output-only Terminal
+Output:
+
+15
+[ 'Trauma', 'Pediatrics', 'Genetics' ]
+notes;
+  -as you make more subclass your readability of your program will increase + efficeincy will increase
+---
+now let's build a static function within class and access it through an instance(objects) of subclass(child calss) and parent class itself and see what is the output .
+ex;
+1.
+
+Within the HospitalEmployee class, create a static method called generatePassword. When it’s called, this method should return a random integer between 0 and 10000.
+solution;
+class HospitalEmployee {
+  constructor(name) {
+    this._name = name;
+    this._remainingVacationDays = 20;
+  }
+  
+  get name() {
+    return this._name;
+  }
+  
+  get remainingVacationDays() {
+    return this._remainingVacationDays;
+  }
+  
+  takeVacationDays(daysOff) {
+    this._remainingVacationDays -= daysOff;
+  }
+  static generatePassword(){
+    return Math.floor(Math.random()*10001);   // this will return a number between 0;10000 
+  }
+}
+
+class Nurse extends HospitalEmployee {
+  constructor(name, certifications) {
+    super(name);
+    this._certifications = certifications;
+  } 
+  
+  get certifications() {
+    return this._certifications;
+  }
+  
+  addCertification(newCertification) {
+    this.certifications.push(newCertification);
+  }
+}
+
+const nurseOlynyk = new Nurse('Olynyk', ['Trauma','Pediatrics']);
+nurseOlynyk.takeVacationDays(5);
+console.log(nurseOlynyk.remainingVacationDays);
+nurseOlynyk.addCertification('Genetics');
+console.log(nurseOlynyk.certifications);
+// nurseOlynyk.generatePassword(); // this line will return an error as there this function is static so we can't access it through subclass instead we will access it through it's class(parent class )
+ console.log(HospitalEmployee. generatePassword());
+console.log(Nurse.generatePassword())
+output;
+Output-only Terminal
+Output:
+
+Loading Complete
+Output-only Terminal
+Output:
+
+15
+[ 'Trauma', 'Pediatrics', 'Genetics' ]
+7630
+4544
+notes;
+we use extends to extend parent class on child class
+we use super to call a property from parent into child class
+any class is a template of instances(objects)
+only the static methods we can't access it through instance of the class instead we can call it through the calss itself  and it's childs also 
+
+
+
+
+at the end you should review the objects in Js in the beginner repo I did to understand more
