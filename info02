@@ -319,5 +319,7 @@ export default resources;
 the import of this module would be;
 import {articleTitle,numberOfChallenges,minutesToComplete} from  './article-data.js';
 
+note;
+domelement -> is a parameter that goes into the function inside js file this parameter refer to the objects(like button=window.getItembyId('display) button here is dom element that access to the functions in js then inside that function we can apply some features on this object which reference to some html code ) look for the secert_message code to understand more)
 
-        
+
