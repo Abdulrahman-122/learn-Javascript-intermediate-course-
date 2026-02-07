@@ -1,0 +1,323 @@
+Run time environment 
+  - Js is running into two env 
+      - inside browser enviroment using window object ..
+      - inside computer itself on any text editor 
+          - front end depends on the browser environment
+          - back end depends on the computer enviroment so we use node.js to run js inside computer
+          - now we can make full stack application using js itself (as it contain frontend , backend)
+
+
+How to export a method inside a file and import that module into another file;(this is called importing modules into Node(local system)
+for exporting;
+/* shape-area.js */
+const { PI } = Math;
+
+// Define and export circleArea() and squareArea() below
+
+const circleArea=(radiusLength)=>{
+  return PI*radiusLength*radiusLength;
+}
+const squareArea=(sideLength)=>{
+  return sideLength*sideLength;
+}
+module.exports.circleArea=circleArea;
+module.exports.squareArea=squareArea;
+
+now to import this file or module inside another file to extract these methods ; we will use require() in two options to extract inforamtion you want you can choose which one you prefer
+
+ex;
+/* app.js */ 
+
+const radius = 5;
+const sideLength = 10;
+
+// import the entire shape-area.js module or destructure the individual functions here
+const areaFunctions=require('./shape-area.js');
+
+// use the imported circleArea and squareArea methods here
+
+const areaOfCircle = areaFunctions.circleArea(radius);
+const areaOfSquare = areaFunctions.
+squareArea(sideLength);
+console.log(areaOfCircle);
+console.log(areaOfSquare);
+// using object destruction
+const {circleArea}=require('./shape-area.js');
+const {squareArea}=require('./shape-area.js');
+console.log(`cicle area of raduis ${radius} = ${circleArea(radius)}`)
+
+console.log(`Square area of sideLength ${sideLength} = ${squareArea(sideLength)}`);
+
+
+  
+
+
+hint; this is how object destructuring work?
+const user = { id: 1, name: 'Alice', job: 'Developer' };
+
+// Without destructuring
+const name = user.name;
+const job = user.job;
+
+// With destructuring
+const { name, job } = user;
+console.log(name); // 'Alice'
+
+  - module.exports is an object that store key-values inside it 
+  like; this ;
+  module.exports={
+  circleArea:circleArea(),
+  squareArea:squareArea()}
+  so we can return these key-values using object destruction as I did above 
+
+
+--- 
+
+Import modules(files) into ES6(browser)
+  - modules are a chunk of code into a file we need to export it to another file to handle some features on it
+how to export modules in ES6(ECMAscript version 6 -> this is the updated version of JS which contain let,const,scoping,modules,objects.....)
+ex;(make sure that you have two files on you editor (one for html,one for js) to see the effect of this expoert )
+
+
+<!-- secret-messages.html --> 
+<html>
+  <head>
+    <title>Secret Messages</title>
+  </head>
+  <body>
+    <button id="secret-button"> Press me... if you dare </button>
+    <p id="secret-p" style="display: none"> Modules are fancy! </p>
+    <script src="./secret-messages.js"> </script>
+  </body>
+</html>
+
+/* secret-messages.js */
+const buttonElement = document.getElementById('secret-button');
+const pElement = document.getElementById('secret-p');
+const toggleHiddenElement = (domElement) => {
+    if (domElement.style.display === 'none') {
+      domElement.style.display = 'block';
+    } else {
+      domElement.style.display = 'none';
+    }
+}
+
+buttonElement.addEventListener('click', () => {
+  toggleHiddenElement(pElement);
+});
+
+actually now we can reduce the size of this file (secret message and take toggleHiddenElement functions and put it into another file and export it , then import it into this file
+/* dom-functions.js */
+const toggleHiddenElement = (domElement) => {
+  if (domElement.style.display === 'none') {
+    domElement.style.display = 'block';
+  } else {
+    domElement.style.display = 'none';
+  }
+}
+
+const changeToFunkyColor = (domElement) => {
+  const r = Math.random() * 255;
+  const g = Math.random() * 255;
+  const b = Math.random() * 255;
+        
+  domElement.style.background = `rgb(${r}, ${g}, ${b})`;
+}
+
+export { toggleHiddenElement, changeToFunkyColor };
+
+note; you can make export like this ;
+export const toggleHiddenElement = (domElement) => {
+  // logic omitted...
+}
+
+export const changeToFunkyColor = (domElement) => {
+  // logic omitted...
+}
+
+
+
+
+
+now we will import them in the file above(secret messge)
+
+import { toggleHiddenElement, changeToFunkyColor } from '../modules/dom-functions.js';
+
+const buttonElement = document.getElementById('secret-button');
+const pElement = document.getElementById('secret-p');
+
+buttonElement.addEventListener('click', () => {
+  toggleHiddenElement(pElement);
+  changeToFunkyColor(buttonElement);
+});
+then change html file after making an export , import type=module (very important) to be understood by browser
+<!-- secret-messages.html --> 
+<html>
+  <head>
+    <title>Secret Messages</title>
+  </head>
+  <body>
+    <button id="secret-button"> Press me... if you dare </button>
+    <p id="secret-p" style="display: none"> Modules are fancy! </p>
+    <script type="module" src="./secret-messages.js"> </script>
+  </body>
+</html>
+
+an example here on those ideas;
+In this module you will find two functions which have been declared for you, changeText() and changeToFunkyColor() but currently, they aren’t being exported.
+
+Using the named export syntax, export changeText() and changeToFunkyColor() from this module.
+
+
+function changeText(domElement, newText) {
+  domElement.innerHTML = newText;
+}
+
+function changeToFunkyColor(domElement) {
+  const r = Math.random() * 255;
+  const g = Math.random() * 255;
+  const b = Math.random() * 255;
+
+  domElement.style.color = `rgb(${r}, ${g}, ${b})`;
+}
+
+// export the functions here
+export 
+{ changeText, changeToFunkyColor }
+
+rest of challenge;
+You are building a simple webpage that makes use of the module module.js. This module declares and exports two functions whose signatures are listed below:
+
+    changeText(domElement, newText): changes the text of the provided domElement to the provided newText.
+    changeToFunkyColor(domElement): changes the color of the provided domElement to a random color.
+
+You will be editing the file main.js. Complete the following tasks:
+
+    Import changeText and changeToFunkyColor from ./module.js using the named import syntax.
+    Call changeText() to change the text of the element stored in the header variable to "I did it!".
+    Within the callback passed to setInterval(), call changeToFunkyColor() and pass in the element stored in the header variable.
+
+Note: Upon completing this challenge, the text will change to “I did it!” and will be set to change color every 0.2 seconds.
+
+/* main.js */
+
+// import the functions here, then uncomment the code below
+import {changeText,changeToFunkyColor} from "./module.js" ;
+
+const header = document.getElementById("header");
+// call changeText here
+changeText(header,'I want to work with it');
+setInterval(()=> {
+  // call changeToFunkyColor() here
+   changeToFunkyColor(header);
+}, 200);
+
+--
+Consider the following functions being exported from the modules square-area.js and circle-area.js:
+
+/* From square-area.js... */
+export function area(side) {
+  return side * side;
+}
+
+/* From circle-area.js... */
+export function area(radius) {
+  return Math.PI * radius * radius;
+}
+
+The following file, area-calculator.js, is programmed to print the area of a square and a circle to the console using these functions. However, because the exported values share the same name, they need to be renamed when they are imported!
+
+Fill in the code using the correct syntax to rename these functions.
+Code
+
+/* area-calculator.js */
+
+import { 
+area as squareArea } from 'square-area.js';
+import { 
+area as circleArea } from 'circle-area.js';
+
+console.log('The area of a square with sides of length 5 is ' + squareArea(5));
+console.log('The area of a circle with radius of length 5 is ' + circleArea(5));
+
+so we concluded from here; don't use the same name to import the module -> browser will hit an error instead use an Alias  using As.
+
+--
+you can also make export and import using default keyword(addition syntax to make import,export in ES6)
+ex; here we will export the these function -> first put them as objects inside a variable then export them as default
+/* dom-functions.js */
+const toggleHiddenElement = (domElement) => {
+    if (domElement.style.display === 'none') {
+      domElement.style.display = 'block';
+    } else {
+      domElement.style.display = 'none';
+    }
+}
+
+const changeToFunkyColor = (domElement) => {
+  const r = Math.random() * 255;
+  const g = Math.random() * 255;
+  const b = Math.random() * 255;
+        
+  domElement.style.background = `rgb(${r}, ${g}, ${b})`;
+}
+
+const resources = { 
+  toggleHiddenElement, 
+  changeToFunkyColor
+};
+export default resources;
+
+now to import this default object; you will need to put any name you want to refer to the resources then from then path to the module to export form
+
+
+import domFunctions from '../modules/dom-functions.js';               // you can make this shorthand instead of this import { default as domFunctions } from '../modules/dom-functions.js';
+
+const { toggleHiddenElement, changeToFunkyColor } = domFunctions;
+
+const buttonElement = document.getElementById('secret-button');
+const pElement = document.getElementById('secret-p');
+
+buttonElement.addEventListener('click', () => {
+  toggleHiddenElement(pElement);
+  changeToFunkyColor(buttonElement);
+});
+
+ex;
+In this module, you will find two functions that have been declared for you, changeText and changeToFunkyColor. The website being rendered wants to make use of these functions but currently, they aren’t being exported.
+
+Using the default export syntax, export an object representing the module that contains both functions.
+
+    Note: Upon completing this challenge, the text will change to "You did it" and will be set to change color every 0.2 seconds
+
+function changeText(domElement, newText) {
+  domElement.innerHTML = newText;
+}
+
+function changeToFunkyColor(domElement) {
+  const r = Math.random() * 255;
+  const g = Math.random() * 255;
+  const b = Math.random() * 255;
+
+  domElement.style.color = `rgb(${r}, ${g}, ${b})`;
+}
+
+// use default export syntax below here
+const resources={
+  changeText,changeToFunkyColor            // solution
+}
+export default resources                 //solution
+
+another example; 
+/* article-data.js */
+const resources = {
+  articleTitle: "Implementing Modules using ES6 Syntax",
+  numberOfChallenges: 6,
+  minutesToComplete: 45
+}
+export default resources;
+the import of this module would be;
+import {articleTitle,numberOfChallenges,minutesToComplete} from  './article-data.js';
+
+
+        
