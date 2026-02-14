@@ -1,0 +1,267 @@
+Fetch Request API:
+  - when call fetch -> it create a request (get response or whatever) to the end point and see whether the promise there is resolved correctly if yes return a true response 
+  - we use this true response in .then later to return a json response from that object 
+  - we can  handle error that output from that json by build a callback function (anonymos or whatever you want ) + build another call back function that handle resloved response from the fetch
+
+  ex;
+
+
+
+
+
+
+
+
+
+
+
+  1.
+
+At the top of main.js, create a const variable called url. Assign url to the following URL as a string:
+
+https://api.datamuse.com/words?sl=
+
+Copy to Clipboard
+
+The ?sl= portion of the string will be the start of your query string, which will be used to pass parameters to the Datamuse API. The query string will be used by the engine to narrow the search to words that sound like your word.
+Checkpoint 2 Passed
+
+2.
+
+Within main.js, we have provided an empty getSuggestions() function. In the function body, create a const variable called wordQuery and assign it inputField.value.
+
+We’ll need wordQuery to store the value of what is being typed into the input field.
+
+Create another const variable called endpoint and assign it the value of a string that is url, and wordQuery concatenated in that order.
+
+We will be working inside getSuggestions() function for the remainder of this exercise.
+Checkpoint 3 Passed
+
+3.
+
+Inside the getSuggestions() function, call the fetch() function and pass in endpoint as an argument. For this API to work within the Codecademy browser, add { cache: 'no-cache' } as the second argument.
+Checkpoint 4 Passed
+
+4.
+
+Chain a .then() method to the fetch() function. Pass an arrow callback function as its argument. The callback function should take response as its single parameter.
+Checkpoint 5 Passed
+
+5.
+
+Inside the success callback function, create a conditional statement that checks if the ok property of the response object evaluates to a truthy value.
+
+If so, return response.json().
+
+By returning response.json(), the next .then() method chained to it will receive a Promise with JSON data.
+Checkpoint 6 Passed
+
+6.
+
+Below the condition’s code block, throw an Error stating 'Request failed!' to raise an exception if the request failed.
+Checkpoint 7 Passed
+
+7.
+
+Next, we will add a second argument to the .then() method to handle errors. Create an arrow function that takes one parameter, networkError.
+
+In the code block of the arrow function, log networkError.message to the console.
+
+Note that we will continue to add to this code in the next exercise to manipulate the webpage to see the word suggestions from Datamuse. The submit button will not return anything yet.
+
+solution;
+// Information to reach API
+const url='https://api.datamuse.com/words?sl='
+
+// Selects page elements
+const inputField = document.querySelector('#input');
+const submit = document.querySelector('#submit');
+const responseField = document.querySelector('#responseField');
+
+// Asynchronous function
+const getSuggestions = () => {
+  const wordQuery=inputField.value;
+  const endpoint=url+wordQuery;
+  fetch(endpoint,{cache:'no-cache'})
+  .then(response=>{
+    if(response.ok){
+      return response.json();
+    }
+    throw new Error('Request failed!')
+  },networkError=>{
+    console.log(networkError.message
+    )
+  })
+}
+
+// Clears previous results and display results to webpage
+const displaySuggestions = (event) => {
+  event.preventDefault();
+  while(responseField.firstChild){
+    responseField.removeChild(responseField.firstChild);
+  }
+  getSuggestions();
+};
+
+submit.addEventListener('click', displaySuggestions);
+----
+now you must know; that
+  - you can run your code either using modules -> which means you need to export ,import from file to file the functions you need
+  - else you will work generally where all functions work inside a giant hall or a room
+ex; in this example we used the general case which means you can run the js function inside other file without importing as we didn't use module as a type of them when using them inside HTML code
+
+1.
+
+After the existing .then() method, chain another .then() method.
+
+As the first argument of our second .then() method, pass an anonymous arrow callback function that takes jsonResponse as its single parameter.
+Checkpoint 2 Passed
+
+2.
+
+Inside the callback function we just created, call the renderRawResponse() function and pass in jsonResponse as its argument. Run the code.
+
+In the input field, type in a word and click the submit button.
+
+If all went well, we should see an array of words that the Datamuse API responded with!
+
+Note that you can find the renderRawResponse() function declaration in public/helperFunctions.js. In this context, the function is available in main.js without any import statement.
+
+Make sure that the renderRawResponse() function is called inside the second .then()‘s callback function.
+Checkpoint 3 Passed
+
+3.
+
+Let’s format our response from the Datamuse API to look presentable on the webpage. To do this, we will use the renderResponse() function that’s been defined in public/helperFunctions.js.
+
+Comment out renderRawResponse(jsonResponse). Then, call renderResponse(jsonResponse) instead.
+
+Run your code.
+
+Try the webpage again with another word!
+
+now solution ;
+// Information to reach API
+const url = 'https://api.datamuse.com/words?sl=';
+
+// Selects page elements
+const inputField = document.querySelector('#input');
+const submit = document.querySelector('#submit');
+const responseField = document.querySelector('#responseField');
+
+// Asynchronous function
+const getSuggestions = () => {
+  const wordQuery = inputField.value;
+  const endpoint = `${url}${wordQuery}`;
+  
+  fetch(endpoint, {cache: 'no-cache'}).then(response => {   // fetch here return a get request as you pass to him the endpoint of the api then gives you the answer(get)
+                                                            
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error('Request failed!');    
+  }, networkError => {
+    console.log(networkError.message)
+  }).then(jsonResponse => {
+    // renderRawResponse(jsonResponse); // solution
+    renderResponse(jsonResponse);  =>solution   
+  })
+}
+
+// Clears previous results and display results to webpage
+const displaySuggestions = (event) => {
+  event.preventDefault();
+  while(responseField.firstChild){
+    responseField.removeChild(responseField.firstChild);
+  }
+  getSuggestions();
+};
+
+submit.addEventListener('click', displaySuggestions);
+
+------
+How to make a request post in JS:
+here's the first part of how to make an object ;
+.
+
+Set the value of the apiKey variable to your Rebrandly API key as a string.
+
+If a correct key is not assigned, proper results will not be seen in the steps afterwards.
+Checkpoint 2 Passed
+
+2.
+
+We will make our POST request inside the shortenUrl() function. Inside the code block of shortenUrl(), create a const variable named urlToShorten and assign it inputField.value. urlToShorten will keep the value of what is being typed into the input field.
+
+Note that we will be working inside shortenUrl() for the remainder of this exercise.
+Checkpoint 3 Passed
+
+3.
+
+Underneath the urlToShorten declaration, create another const variable named data and assign it to the stringified version of {destination: urlToShorten}. We can use the JSON.stringify() method to do this.
+
+The data variable will be used to send the information, which needs to be in string format, to the request body.
+Checkpoint 4 Passed
+
+4.
+
+Below our data variable declaration, call the fetch() function. Pass url as its first argument and an empty object as its second argument.
+Checkpoint 5 Passed
+
+5.
+
+Now it’s time to add some properties to the empty object that you just created. Add a property with the key method and the value 'POST'.
+Checkpoint 6 Passed
+
+6.
+
+In the same object, add another property. The key for this property is headers, and the value will be the following object:
+
+{
+  'Content-type': 'application/json',
+  'apikey': apiKey
+}
+
+Copy to Clipboard
+
+We will use this to connect to the API.
+Checkpoint 7 Passed
+
+7.
+
+In that same object that has the properties method and headers, add another property. The key is named body and the value will be data.
+
+We’ve now created an object containing all the information we need for our POST request!
+solution;
+// Information to reach API
+const apiKey = 'd95f2635fca84191986d2679c0db5208';
+const url = 'https://api.rebrandly.com/v1/links';
+
+// Some page elements
+const inputField = document.querySelector('#input');
+const shortenButton = document.querySelector('#shorten');
+const responseField = document.querySelector('#responseField');
+
+// Asynchronous functions          // mysolution
+const shortenUrl = () => {
+  const urlToShorten=inputField.value;          
+ const data=JSON.stringify({destination:urlToShorten});
+ fetch(url,{method:'POST',headers:{'Content-type':'application/json','apikey':apiKey},body:data});
+}
+
+// Clear page and call Asynchronous functions
+const displayShortUrl = (event) => {
+  event.preventDefault();
+  while(responseField.firstChild){
+    responseField.removeChild(responseField.firstChild);
+  }
+  shortenUrl();
+}
+
+shortenButton.addEventListener('click', displayShortUrl);
+
+the second part here is ;
+stop at lesson 7  of the this module.
+
+
+
