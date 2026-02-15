@@ -261,7 +261,139 @@ const displayShortUrl = (event) => {
 shortenButton.addEventListener('click', displayShortUrl);
 
 the second part here is ;
-stop at lesson 7  of the this module.
+1.
+
+Chain a .then() method at the end of the fetch() function we wrote in the previous exercise. As its first argument, pass an arrow function as a callback that takes response as its single parameter.
+Checkpoint 2 Passed
+
+2.
+
+Inside the callback function of .then(), use a conditional statement to check the value of the ok property of response. If it evaluates to a truthy value, return response.json().
+
+Run the code.
+Checkpoint 3 Passed
+
+3.
+
+Below the curly braces of the conditional statement, throw a new Error in case response.ok is falsy.
+
+The error message should be 'Request failed!'.
+Checkpoint 4 Passed
+
+4.
+
+As the second argument of the .then() method, add another arrow callback function that takes networkError as a single parameter.
+
+Log the networkError.message inside of the callback function.
+
+By adding this second callback, you’re safeguarding yourself in the rare event that the network returns an error!
+Checkpoint 5 Passed
+
+5.
+
+Chain another .then() method to the end of the previous .then() method.
+Checkpoint 6 Passed
+
+6.
+
+Pass in an anonymous arrow function as an argument for our second .then(). This callback function will take jsonResponse as its single parameter.
+
+Inside the callback function, call renderResponse() and pass in jsonResponse.
+
+The renderResponse() helper function can be viewed at public/helperFunctions.js.
+
+Run the code.
+
+Put in any URL in the text field, and then click the shorten button on the webpage. Make sure you include the entire link, including 'http://' or 'https://'.
+
+solution;
+fetch(url, {
+    method: 'POST',              //this is how post request is done in JS
+    headers: {
+      'Content-type': 'application/json',
+      'apikey': apiKey
+    },
+    body: data
+  }).then(response =>{
+    if (response.ok){
+      return response.json();
+    }throw new Error('Request failed!');
+   
+  },networkError=>{
+    console.log(networkError.message);
+  }).then(jsonResponse=>{
+    renderResponse(jsonResponse);
+  })
+}
+
+----
+Async Get response
+  - first you need for ; async to make a function Asynchronous while you are doing something else 
+  - await -> suspend the entire program in order to  fetch the Get response from the endpoint  or even to send a Post response but in this example we are waiting for a Get response from the server
+ex;
+1.
+
+Under the comment “Asynchronous function”, create a const variable called getSuggestions and set it to a new arrow function using the async keyword.
+
+You’ll be coding inside the getSuggestions() function for the remainder of this exercise.
+Checkpoint 2 Passed
+
+2.
+
+Inside the getSuggestions() function, create a const variable named wordQuery and assign it inputField.value.
+Checkpoint 3 Passed
+
+3.
+
+Create another const variable called endpoint and assign it the value of a string that is url, queryParams, and wordQuery concatenated in that order.
+Checkpoint 4 Passed
+
+4.
+
+Add a try statement with an empty code block. Outside the code block for try, add a catch(error) statement with a code block that logs error to the console.
+Checkpoint 5 Passed
+
+5.
+
+Inside the try code block, create a const variable named response and assign it to await the result of calling fetch() with endpoint as the first argument. For this API to work within the Codecademy browser, add {cache: 'no-cache'} as the second argument.
+Checkpoint 6 Passed
+
+6.
+
+Below the response variable declaration from the previous step, create a conditional statement that checks if the ok property of the response evaluates to a truthy value.
+
+Inside the code block of the conditional statement, await response.json() and save it to a new const variable called jsonResponse.
+Checkpoint 7 Passed
+
+7.
+
+Still inside the conditional statement, call the function renderResponse() and pass in jsonResponse. Then, run the code.
+
+In the input field, type in a word and click the submit button on the web page.
+
+Great, now we have an organized list of words from the GET request!
+
+The declaration of the renderResponse() function can be found at public/helperFunctions.js.
+
+solution;
+// Asynchronous function
+// Code goes here
+const getSuggestions=async () =>{
+  const wordQuery=inputField.value;
+  const endpoint=url+queryParams+wordQuery;
+  try{
+    const response=await fetch(endpoint,{cache:'no-cache'});
+    if (response.ok){
+      const jsonResponse=await response.json();
+      renderResponse(jsonResponse);
+    }
+  }catch(error){
+    console.log(error);
+  }
+}
+---
+Async Post response;
+s
 
 
 
