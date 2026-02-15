@@ -1,19 +1,13 @@
+Make api request using Fetch in Js 
+
+
+
 Fetch Request API:
   - when call fetch -> it create a request (get response or whatever) to the end point and see whether the promise there is resolved correctly if yes return a true response 
   - we use this true response in .then later to return a json response from that object 
   - we can  handle error that output from that json by build a callback function (anonymos or whatever you want ) + build another call back function that handle resloved response from the fetch
 
   ex;
-
-
-
-
-
-
-
-
-
-
 
   1.
 
@@ -392,8 +386,57 @@ const getSuggestions=async () =>{
   }
 }
 ---
-Async Post response;
-s
+Async await Post response;
+  -> now we want to send a Post request using Async, Await to a url endpoint and see the output; in this case; we need method='Post' and object called; json.stringify to do this
+ex;
+1.
 
+At the top of main.js, assign apiKey to your Rebrandly API key.
+Checkpoint 2 Passed
 
+2.
+
+The fetch() function should be inside the try block, which should be inside the shortenUrl() function. In the fetch() function, pass in url as the first argument and an object as the second argument.
+
+In that object you just created, add the following three properties:
+
+    method with a value of 'POST'
+    body with a value of data
+    headers with a value of the object below:
+
+{
+  'Content-type': 'application/json',
+  'apikey': apiKey
+}
+
+Copy to Clipboard
+
+Run the code. Then paste in the URL again and click the shorten button.
+
+Great job using Rebrandly to shorten your URL!
+solution ;
+onst shortenUrl = async () => {
+	const urlToShorten = inputField.value;
+  const data = JSON.stringify({destination: urlToShorten});
+  try {
+    const response = await fetch(url,  // this is the solution
+      // add code here
+      {method:"POST",body:data,
+      headers:{'Content-type':"application/json",'apikey':apiKey}}
+    );
+		if(response.ok){
+      const jsonResponse = await response.json();
+      renderResponse(jsonResponse);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+to sum up this ;
+
+we use fetch to make a request
+we use async-await to resolve the promises in order to finish this request (post,get)
+async -> make asynchronous function to build a promise
+await -> make program suspend untill this promise resolved or reject
 
