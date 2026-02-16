@@ -1,0 +1,302 @@
+Errors and how to understand it;
+
+ex;
+Near the beginning of the text file in the code editor, you will find an example stack trace. On line 14 of the text file, fill in the name of the file throwing the error in this stack trace.
+
+If you are unsure how to fill in the answer, feel free to check out the hint.
+Checkpoint 2 Passed
+
+2.
+
+On line 16 of the text file, fill in the line number throwing the error in the example stack trace.
+Checkpoint 3 Passed
+
+3.
+
+On line 18 of the text file, fill in the type of the error being thrown in the example stack trace.
+Checkpoint 4 Passed
+
+4.
+
+On line 20 of the text file, fill in the description of the error being thrown in the example stack trace.
+
+solution;
+Based on the following error stack trace, fill in the answers to the questions below:
+
+------------------------------------------------------------------
+
+/home/ccuser/workspace/learn-javascript-debugging-code/script.js:5
+if (numberSum > total;) {
+                     ^
+            
+SyntaxError: Unexpected token ;
+
+------------------------------------------------------------------
+
+From what file was this error thrown?
+1 - Answer: script.js
+On what line of that file was this error thrown?
+2 - Answer: 5
+What type of error was thrown in this stack trace?
+3 - Answer: SyntaxError
+What is the description of the error in this stack trace?
+4 - Answer: Unexpected token
+----
+you must know the difference between (syntax,Reference,type) errors
+  syntaxError -> there's a typo in the syntax of the language
+  Refernece error -> you need to define a variable that doesn't exist 
+  typeError -> there's an error in the type of that varaible you define it as a number but you used in the following lines as a string like in this example
+
+ex;
+1.
+
+Fill in the answer to the question on line 2.
+Checkpoint 2 Passed
+
+2.
+
+Fill in the answer to the question on line 6.
+Checkpoint 3 Passed
+
+3.
+
+Fill in the answer to the question on line 9.
+
+
+solution;
+myVariable++;
+// 1 - What type of error will be thrown on the line above: 
+ReferenceError;  // as you try to use a variable that doesn't exist
+const myString = 42;
+myString.substring(0);
+// 2 - What type of error will be thrown on the line above: 
+TypeError;
+const myRandomNumber; = Math.random();
+// 3 - What type of error will be thrown on the line above: 
+SyntaxError
+
+
+---
+ex;
+1.
+
+The code in the code editor currently contains three errors. Using the above steps, locate and fix all three errors in the code. Don’t be afraid of any error messages that appear, you are triggering them on purpose! Just take your time locating them and fixing them one at a time.
+
+If you get stuck, feel free to consult the hint.
+
+Note: The error messages in the terminal to the right may wrap to a new line based on your screen size. As a result, what you think is the end of a line might only be partway through it. Read through all of the error stack trace to ensure you find the information you’re looking for.
+
+solution;;
+function isSumBigger(number1, number2, total) {    //added ) here
+  const sum = number1 + number2;
+  
+  if (sum > total) {  // ; removed from here + replaced Numbersum with sum
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Should return true
+console.log('isSumBigger(1, 3, 2) returns: ' + isSumBigger(1, 3, 2));
+
+// Should return false
+console.log('isSumBigger(1, 3, 5) returns: ' + isSumBigger(1, 3, 5));
+
+
+
+-----
+ex;
+1.
+
+In the code editor, we’ve given you a function that is supposed to take a string containing a single word as an argument and return the capitalized version of that word. If the string contains multiple words (contains a space character, ' '), it should return null.
+
+Currently, this code is not working as expected. Take a look at our tests on lines 16-19. We expect the first function call to return 'Hey' and the second function call to return null. Run the code to see that it is not working as expected but also not throwing any errors.
+Checkpoint 2 Passed
+
+2.
+
+Let’s use console.log() to debug this code! Start by adding a console.log() statement to line 2 and printing out the word being passed into the function. This will help us ensure our function is being called properly and the word variable is set as we expect at the start of the function.
+Checkpoint 3 Passed
+
+3.
+
+Looking at the console output, both 'hey' and 'hey ho' are being printed as we expected. No bugs yet.
+
+Comment out the console.log() statement from the beginning of the function. Then add the following console.log() statement inside the if statement to see if it is working properly:
+
+console.log('Word value inside of if statement: ' + word);
+
+Copy to Clipboard
+
+The behavior we want is for 'hey ho' to enter the if block and return null and for 'hey' to skip the if block and get capitalized.
+Checkpoint 4 Passed
+
+4.
+
+Look at the console output. 'hey' is being printed from inside the if statement block and 'hey ho' is not. This is the opposite behavior we expected. We found a bug!
+
+Looking at our if statement, we accidentally included a ! that is negating our condition. It is saying that if a word does not have multiple words, go into the if block, and if it does, move past it.
+
+Delete the ! character from the beginning of the if statement condition to fix the bug, then re-run our code.
+
+Our function now appears to be working as expected, so there is no need to continue stepping through the rest of the function.
+
+solution;
+function capitalizeASingleWord(word) {
+  console.log(word);
+  if (word.match(' ')) {
+    console.log('Word value inside of if statement: ' + word);
+  }
+  
+  let firstLetter = word.charAt(0);
+  const restOfWord = word.slice(1);
+  
+  firstLetter = firstLetter.toUpperCase();
+  
+  return firstLetter + restOfWord;
+}
+
+// Should return "Hey"
+console.log("capitalizeASingleWord('hey') returns: " + capitalizeASingleWord('hey')); 
+
+// Should return null
+console.log("capitalizeASingleWord('hey ho') returns: " + capitalizeASingleWord('hey ho')); 
+output;
+hey
+capitalizeASingleWord('hey') returns: Hey
+hey ho
+Word value inside of if statement: hey ho
+capitalizeASingleWord('hey ho') returns: Hey ho
+
+---
+
+In the code editor, we have included a broken function for you to debug. This function is supposed to take two strings, compare the first letter of each, and return the string which comes later alphabetically. If the first letters of both strings are the same, it should return null.
+
+At the bottom of the file, we’ve included three test cases and their expected outputs. If you run the code, you will see that they are not working as expected.
+
+Using the console.log() debugging mindset laid out above, walk through the code, locate the three bugs we have included for you, and fix them.
+
+This is a big task, so feel free to consult the hint for suggestions on where to place your console.log() statements and how to fix the code.
+solution;
+// Returns the string whose first letter is later in the alphabet. If both first letters are equal, returns null.
+function getLaterFirstLetter(string1, string2) {
+  const firstLetter1 = string1.charAt(0);   // change 1 to 0
+  const firstLetter2 = string2.charAt(0);
+    console.log(firstLetter1);
+    console.log(firstLetter2);
+  if (firstLetter1 === firstLetter2) {
+
+    return null;
+  } else if (firstLetter1 > firstLetter2) { 
+    return string1;   // change string2 to string1 and in alse the vice verse 
+  } else {
+    return string2;
+  }
+}
+
+// Should return "blueberry"
+console.log("getLaterFirstLetter('avocado', 'blueberry') returns: " + getLaterFirstLetter('avocado', 'blueberry'));
+
+// Should return "zebra"
+console.log("getLaterFirstLetter('zebra', 'aardvark') returns : " + getLaterFirstLetter('zebra', 'aardvark'));
+
+// Should return null
+console.log("getLaterFirstLetter('astro', 'afar') returns: " + getLaterFirstLetter('astro', 'afar'));
+
+
+
+----
+1.
+
+In the code editor, we’ve included a function that is supposed to take a string and return a version of that string repeated twice. For example, you can see in the test case at the bottom of the file, we expect doubleString('echo') to return 'echoecho'.
+
+However currently, when we run our file, nothing happens. Clearly we are using the .repeat() method incorrectly. Let’s find the MDN documentation for String.repeat().
+
+Find the link to the documentation for String.repeat() and paste it to the end of the comment on line 1.
+Checkpoint 2 Passed
+
+2.
+
+Now that we’ve found the documentation for String.repeat(), let’s read the documentation to see what we’re doing wrong. Take a look at the parameters section of the documentation. Can you see why our string isn’t getting repeated?
+
+Using this information, fix the .repeat() call in our code.
+solution;
+// Link to String.repeat() documentation: 
+//  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat
+function doubleString(string) {
+  return string.repeat(2);
+}
+
+// Should return 'echoecho'
+console.log("doubleString('echo') returns: " + doubleString('echo'));
+output;Output-only Terminal
+Output:
+
+doubleString('echo') returns: echoecho
+----
+ex;
+In the code editor, we’ve included an unfinished function, containsCake(). It takes a string and checks if that string contains the substring 'cake' inside of it. If so, it should return true. If not, it should return false.
+
+Using the information in this Stack Overflow post, implement the functionality of this function.
+
+If you’re stuck on how to translate the answer from this forum into working code, check out the hint.
+solution;
+// Returns whether or not the provided string contains a substring of "cake" in it.
+function containsCake(string ) {
+  return string.includes('cake');
+}
+
+// Should return true
+console.log("containsCake('I think cake is my soul mate.') returns: " + containsCake('I think cake is my soul mate.'));
+
+// Should return false
+console.log("containsCake('Pie is certainly the coolest dessert.') returns: " + containsCake('Pie is certainly the coolest dessert.'));
+output;
+containsCake('I think cake is my soul mate.') returns: true
+containsCake('Pie is certainly the coolest dessert.') returns: false
+---
+ex;
+In the code editor, we have provided you a broken implementation of a function called isStringPerfectLength(). This function takes a string (string), a minimum string length (minLength), and a maximum string length (maxLength). It should return whether the provided string is within the range of the two lengths. More specifically, if it is longer than the minLength and shorter than the maxLength.
+
+We have provided three example test cases at the bottom of the file. The first checks if the string 'Dog' is in the length range of 2 and 4. In this case, the function should return true because the length of the string is 3 which is between those two values. The next two examples fail. The first fails because the string is too long. The second fails because the string is too short.
+
+Using the debugging process you learned in this lesson, outlined above, find and fix all the bugs in this code.
+
+The code will throw errors at you right off the bat, but remember, this is a good thing! We believe you have all the skills now to debug this code. Don’t give up and show us what you’ve learned! We know you can do it.
+solution;
+function isStringPerfectLength(string, minLength, maxLength) {
+  const stringLength = string.length;
+  
+  if (stringLength < minLength) {        //added ) here + change the sign from > to < 
+    return false;
+  } else if (stringLength > maxLength) { //change the sign from < to >
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// Should return true
+console.log("isStringPerfectLength('Dog', 2, 4) returns: " + isStringPerfectLength('Dog', 2, 4));
+
+// Should return false
+console.log("isStringPerfectLength('Mouse', 2, 4) returns: " + isStringPerfectLength('Mouse', 2, 4));
+
+// Should return false
+console.log("isStringPerfectLength('Cat', 4, 9) returns: " + isStringPerfectLength('Cat', 4, 9));
+
+output;
+isStringPerfectLength('Dog', 2, 4) returns: true
+isStringPerfectLength('Mouse', 2, 4) returns: false
+isStringPerfectLength('Cat', 4, 9) returns: false
+
+
+
+
+to sum up;
+
+read  the location+type of error to solve it 
+if your code broken+doesn't through an error use console.log and walk throughit
+once you did instructions above and no result -> start to search for documentations
+
