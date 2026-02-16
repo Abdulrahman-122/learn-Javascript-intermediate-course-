@@ -440,3 +440,17 @@ we use async-await to resolve the promises in order to finish this request (post
 async -> make asynchronous function to build a promise
 await -> make program suspend untill this promise resolved or reject
 
+
+------
+
+now every problem or bugs you face is a chance to build your muscle of thinking about that language so => don't think that you are lazy or stupid
+every dev should face a problem as the code complexity increase -> the number of bugs will be increase
+to solve any bug;
+think to solve it first if you can't 
+search for a specific keyword related to what you faced.
+try to implement it by hand.
+
+
+
+
+
