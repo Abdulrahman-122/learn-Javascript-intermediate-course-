@@ -303,6 +303,29 @@ const sortSanFrancisco = sortArrayByValue(filteredPlayersBySanFrancisco);
 const sortSFByDateJoined = sortSanFrancisco("dateJoined");
 console.log(sortSFByDateJoined);
 
+---
+try to make your code more moduler ;
+function processUser(user) {
+  user.name = user.name.toUpperCase();
+  user.age += 1;
+  user.active = true;
+  return user;
+}
+instead;
+const uppercaseName = user => ({
+  ...user,
+  name: user.name.toUpperCase()
+});
+
+const incrementAge = user => ({
+  ...user,
+  age: user.age + 1
+});
+
+const activateUser = user => ({
+  ...user,
+  active: true
+});
 
 
 
