@@ -1,0 +1,221 @@
+# types of errors;
+  -Reference Error
+    -which means a function is not found
+  -TypeError;
+    - when a non valid datatype  occur.
+-In main.js, we have a function throwError() that will throw a ReferenceError. There are also two console.log() statements, one at the top of the file and one at the bottom.
+Call throwError() below the comment that indicates to call it. Observe what code runs and what code doesn’t.
+solution;
+console.log('This message will be printed to the console.');
+
+function throwError () {
+  return notDefinedVar;
+}
+
+// Call throwError() below:
+throwError();
+
+console.log('Because of the error, this will not be printed!');
+output;
+This message will be printed to the console.
+
+/home/ccuser/workspace/error-handling-runtime-errors/main.js:4
+  return notDefinedVar;
+  ^
+
+ReferenceError: notDefinedVar is not defined
+
+----
+you can build the error message using a constructor called;Error
+like this;
+At the top of main.js, add a console.log() that prints an error with the message 'User missing name'.
+
+After running the code, take note of the console.log() at the bottom of main.js and if that line of code still runs.
+solution;
+// Write your code below:
+console.log(Error('User missing name'))
+console.log(new Error('User missing name'))
+console.log('Will logging the error stop our program from running?');
+output;
+
+Error: User missing name 
+Error: User missing name
+
+-----
+to stop the program from running once it found an error;
+you may need to use throw
+ex;
+Use the throw keyword to throw an error with the message 'Username or password does not match'
+
+After you clear this checkpoint, try adding some code after your throw statement. Also, try to throw a new error and other data types to see what happens!
+
+solution;
+throw  Error('Username or password does not match')
+throw new Error('Username is not correct')
+console.log('hello')
+throw Error('OOPs something went wrong');
+output;
+/home/ccuser/workspace/error-handling-throw/main.js:2
+throw  Error('Username or password does not match')
+^
+
+Error: Username or password does not match
+    at Object.<anonymous> (/home/ccuser/workspace/error-handling-throw/main.js:2:8)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.19.0
+-----
+now what if you want to handle the error in order to show the lines of code after it.
+ex;
+1.
+
+Create a try...catch statement that doesn’t have any code in the try block or the catch block. Make sure to use e as the error object.
+Checkpoint 2 Passed
+
+2.
+
+In the try block, throw an error using the Error() function and pass into Error() a string containing a message of your choice!
+Checkpoint 3 Passed
+
+3.
+
+Inside the catch block, log the error to the console.
+solution;
+try{
+  throw Error('This is a thrown  error.')
+}catch(e){
+    console.log(e)
+}
+
+console.log('This thrown error has been shown due to the Error above.');
+output;
+Error: This is a thrown  error.
+    at Object.<anonymous> (/home/ccuser/workspace/error-handling-try-catch-i/main.js:2:9)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+This thrown error has been shown due to the Error above.
+------------
+1.In main.js, there is a function called capAllElements() that takes an array of elements and capitalizes each element.
+
+Currently, it’s written in such a way that the function will execute regardless of what argument is passed in, but what if the argument isn’t an array? As written, an error would be thrown, and our program would stop running.
+
+Run the code as it is to see what error shows up in the console.
+
+Let’s handle that error:
+
+    Put the existing arr.forEach(...) code in a try block.
+    Add a catch statement after the try block and inside the catch block, log the error to the console.
+
+solution;
+function capAllElements(arr){
+
+  try{
+    arr.forEach((el, index, array) => {
+    array[index] = el.toUpperCase();
+  });
+  }catch(e){
+      console.log(e)
+  }
+}
+
+capAllElements('Incorrect argument');
+
+output;
+Output-only Terminal
+Output:
+
+TypeError: arr.forEach is not a function
+    at capAllElements (/home/ccuser/workspace/error-handling-try-catch-ii/main.js:4:9)
+    at Object.<anonymous> (/home/ccuser/workspace/error-handling-try-catch-ii/main.js:12:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+
+    as you see we handle the errors using a  catch statements.
+---------
+Currying in JS;
+  - is a way to add some features to JS functions to make it good+avoid any errors
+ex;
+// traditional function
+function add(a,b) {
+    return a + b;
+}
+
+// curried function
+function curried_add(a) {
+    // The outer function returns a nested single-argument function
+    return function nested_func(b) {
+        return a + b;
+   }
+}
+// creates a local variable a and assigns it the value 1
+let add_one = curried_add(1); 
+
+// add_one() still has access to the argument from curried_add()
+add_one(10); 
+ex;
+Declare a variable named nestedFunction and set it equal to curriedMultiply() called with a number argument.
+
+Declare a second variable, result and set it equal to nestedFunction() called with a number argument.
+
+If you console.log() result, it should log a number
+solution;
+function curriedMultiply(a) {
+   return function(b) {
+       return a * b
+   }
+}
+// Write your code here
+const nestedFunction=curriedMultiply(2);
+const result=nestedFunction(1)
+console.log(nestedFunction)
+console.log(result)
+
+here the second function takes the just one parameter at first then take the second one when calling;
+see this to understand;
+
+ex;
+The function makeGreeting() takes one string argument.
+
+Write additional code to make makeGreeting() return a function.
+
+The returned function should take its own string argument, then return a concatenation of makeGreeting‘s string argument, a space, and the inner function’s argument, such as “Hello World”.
+
+You can uncomment the lines below the function to check your work.
+
+solution;
+function makeGreeting(string) {
+//Write your code here
+    return (string2)=>{
+        return string+' '+string2
+    }
+ 
+}
+let hello = makeGreeting('Hello');
+let helloWorld = hello('World');
+console.log(helloWorld);
+
+pause;Currying with Arrow Functions
+
+
+
+    
