@@ -216,6 +216,94 @@ console.log(helloWorld);
 
 pause;Currying with Arrow Functions
 
+--------------
+ex; we want to change the object value from color to other. 
+// write your code here
+const changeColorArrow=(color)=>{
+  return function(obj){
+    obj.color=color;
+  }
+}
+const change=changeColorArrow('Yellow');
+const car = {color:'Red'}
+change(car)
+console.log(car)
+this is called; carrying with arrow function
+----------------
+now to apply currying on this function;
+const sortPlayersByValueFromCity = (playersArr, city, sortKey) => {
+    return playersArr.filter(player => {
+        return player.city === city;
+    }).sort((a,b) => {
+        return a[sortKey] - b[sortKey]
+    });
+}
+ 
+console.log(sortPlayersByValueFromCity(players, "San Francisco", "age"));
+now;
+use currying to enhance it;
+const setFilter = array => key => value => array.filter(x => x[key] === value);
+const filterPlayers = setFilter(players);
+const filterPlayersByCity = filterPlayers('city');
+const filteredPlayersBySanFrancisco = filterPlayersByCity('San Francisco');
+const filterPlayersBySport = filterPlayers('sport');
+const filteredPlayersBySoccer = filterPlayersBySport('soccer');
+ 
+console.log(filteredPlayersBySanFrancisco); // Returns an array of players from San Francisco
+console.log(filteredPlayersBySoccer); // Returns an array of players that play soccer
+or you can code more moduler;
+const sortArrayByValue = sortArray => sortKey => {
+    return sortArray.sort(function(a, b){
+        if(a[sortKey] < b[sortKey]) { return -1; }
+        if(a[sortKey] > b[sortKey]) { return 1; }
+        return 0;
+    });
+}
+
+some example to understand how currying works ;
+
+//function add(a, b, c) {
+//  return a + b + c;
+//}
+//
+//add(1, 2, 3); // 6
+// how to make this function curryied;
+
+//method 1
+
+
+function add(a){
+        return function (b){
+                return function(c){
+                        return a+b+c ;}}}
+
+console.log(add(12)(11)(22));
+//method2
+
+const add2=a => b => c=> a+b+c;
+
+
+console.log(add2(12)(11)(22));
+
+output;
+node currying.js 
+45
+45
+
+note;
+If your function looks like:
+(a, b) => something
+instead;
+a => b => something
+
+
+
+ 
+const sortSanFrancisco = sortArrayByValue(filteredPlayersBySanFrancisco);
+const sortSFByDateJoined = sortSanFrancisco("dateJoined");
+console.log(sortSFByDateJoined);
+
+
 
 
     
