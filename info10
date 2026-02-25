@@ -1,0 +1,5 @@
+#  Concurrency + event loop in Js 
+  - we can make JS have multi threads at the same time.
+  - by using events
+  https://static-assets.codecademy.com/Courses/Learn-JavaScript/Event-Loop-and-Concurrency/JavaScript-Engine-Diagram.png
+  
