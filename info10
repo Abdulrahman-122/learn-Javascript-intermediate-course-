@@ -1,5 +1,28 @@
 #  Concurrency + event loop in Js 
   - we can make JS have multi threads at the same time.
   - by using events
-  https://static-assets.codecademy.com/Courses/Learn-JavaScript/Event-Loop-and-Concurrency/JavaScript-Engine-Diagram.png
-  
+  see the  engine of Js 
+you need to understand these things in order to understand how concurrency works in js
+	- head
+		- a memeory storage used to store variables, objects in unordered manner.
+	- call stack
+		- it's a place to store the frames of the objects being running like functions,variables.
+		-when running a function contain a nested functions
+			- the inner functions will run first then the one above it and so on untill we got to the log statments that render the output.
+			when you run this function it's appear in the stack as you see;
+function foo() {
+ return function bar() {
+   return function baz() {
+     return 'I love CodeCademy'
+   }
+ }
+}
+console.log(foo()()());
+
+		see picture 2 (stack frames with function)
+				- as you see ;
+					- we put global() at the bottom of the stack to initiate the environment of Js(lixecal,variable environment)
+					- data stored in stack in FILO
+-event queue;
+				-it's a bunch of the messages that is taken from the API or whatever => these messages are stored in FIFO.
+				-these messages wait to be back into the stack.
