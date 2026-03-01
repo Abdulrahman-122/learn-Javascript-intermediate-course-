@@ -92,3 +92,78 @@ then reassigned it by another string so it's reference count still 1 and the old
   how it's working:
     - mark => is a boolean that traverse over the reachable variables of the program but that one unreachable will goes to the garbage collection
 # What happens when your process runs out of memory?
+  -A leaking in memory will occur
+    - it's a memory that is not realesed back to the free memory.
+  - what is the results of   using leak memory?
+    - crashes
+    - High ram usage
+    - slowdown.
+   
+    - what makes leaking in memroy?
+    1. Messy closure;
+        - ex;
+                  - function bigObjMaker() {
+              const bigObj = {};
+              return (key, val) => {
+                  bigObj[key] = val;
+                  console.log(bigObj);
+              }
+          }
+          let bigMemoryUser = bigObjMaker();
+          
+          Array(1000).fill(1).map((x,i) => {
+              bigMemoryUser(i, i);
+          });
+          here; bigobj is  opened infinitely .
+          + console.log in the anonymous func inside bigObjMaker.
+         
+    2.  Dangling  timers + Event listenrs
+                    function cb() {
+              let count = 0;
+          
+              return function() {
+                   count++;
+                   console.log(count);
+              }
+          }
+          
+          setInterval(cb(), 1000);
+          
+          here; you see that => setinterval repeatedly call the  function  cb() every 1000ms
+          this is leak in memroy to solve this assign this set to a variable
+          ; let intervalID = setInterval(cb(), 100);
+
+3. ex; const lotsOfMemory = "Imagine this is a value that uses a lot of memory"
+
+      document.addEventListener('scroll', function() {
+       cb(lotsOfMemory);
+      });
+       here we used ; a string that store when scroll happen so this is also leark for memroy
+4.Circular reference;
+
+
+
+let first = new Object();
+let second = new Object();
+
+first.aProperty = second;
+second.anotherProperty = first;
+
+first , second reference each other so this cause leak in memroy
+4. Declaring  variables on The global object;
+function helloWorld() {
+  // below greeting does not use a `let`, `const` or `var` statement to
+  // declare the variable, so it's added to the global object after we
+  // call `helloWorld()`
+   greeting = "Hello world"; 
+  
+// This also leaks into the global `this`
+  this.greeting2 = "Goodbye!"; 
+}
+
+helloWorld();
+now greeting is a global variable but it didn't has any data type so this will nevebe go to the garbage as it handled as a root object;
+
+How to avoid leaking?
+  - reuse objects instead of make new ones.
+  - do the reverse of the problems above
